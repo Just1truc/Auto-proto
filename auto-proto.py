@@ -9,7 +9,10 @@ def search_for_prototypes(paths):
     proto_h = open("include/proto.h", "a")
     for lines in inside:
         if lines[0] == '{':
-            proto_h.write(prev_line)
+            for char in prev_line:
+                if char == '\n':
+                    proto_h.write(";")
+                proto_h.write(str(char))
         prev_line = lines
     proto_h.close()
     inside.close()
