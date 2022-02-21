@@ -23,7 +23,7 @@ def browse_dir(directory, paths):
         if path.isdir(pth):
             browse_dir(os.listdir(pth), pth)
         else:
-            if ".c" in elements:
+            if ".c" in elements and not("bonus/" in pth) and not("tests" in pth):
                 search_for_prototypes(pth)
 
 def main():
