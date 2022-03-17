@@ -4,18 +4,24 @@ import os.path
 from os import path
 
 def search_for_prototypes(paths):
-    inside = open(paths, "r")
+    init = open(paths, "r")
+    inside = init.read().split("\n")
     prev_line = ""
     proto_h = open("include/proto.h", "a")
-    for lines in inside:
-        if lines[0] == '{':
-            for char in prev_line:
-                if char == '\n':
-                    proto_h.write(";")
-                proto_h.write(str(char))
-        prev_line = lines
+    for id in range(1, len(inside) - 1, 1):
+        if inside[id].replace("\n", "").replace(" ", "").replace("\t", "") == "{" and inside[id][0] == '{':
+            i = id - 1
+            tot = []
+            while ("(" not in inside[i + 1]):
+                tot.append(inside[i] + ("\n" if i < id - 1 else ""))
+                i -= 1
+            tot.reverse()
+            print(tot)
+            tot = ''.join(tot)
+            tot += ";\n"
+            proto_h.write(tot)
     proto_h.close()
-    inside.close()
+    init.close()
 
 def browse_dir(directory, paths):
     for elements in directory:
