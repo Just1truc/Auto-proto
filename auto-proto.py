@@ -19,7 +19,8 @@ def search_for_prototypes(paths):
             print(tot)
             tot = ''.join(tot)
             tot += ";\n"
-            proto_h.write(tot)
+            if not("static" in tot):
+                proto_h.write(tot)
     proto_h.close()
     init.close()
 
